@@ -21,7 +21,7 @@ func _make_key_from_metadata(doubled):
 
 # Creates they key for the returns hash based on the type of object passed in
 # obj could be a string of a path to a script with an optional subpath or
-# it could be an instance of a doubled object.
+# it could be an instantiate of a doubled object.
 func _make_key_from_variant(obj, subpath=null):
 	var to_return = null
 
@@ -72,10 +72,10 @@ func add_stub(stub_params):
 		var key = _add_obj_method(stub_params.stub_target, stub_params.stub_method, stub_params.target_subpath)
 		returns[key][stub_params.stub_method].append(stub_params)
 
-# Searches returns for an entry that matches the instance or the class that
+# Searches returns for an entry that matches the instantiate or the class that
 # passed in obj is.
 #
-# obj can be an instance, class, or a path.
+# obj can be an instantiate, class, or a path.
 func _find_stub(obj, method, parameters=null):
 	var key = _make_key_from_variant(obj)
 	var to_return = null
@@ -109,7 +109,7 @@ func _find_stub(obj, method, parameters=null):
 	return to_return
 
 # Gets a stubbed return value for the object and method passed in.  If the
-# instance was stubbed it will use that, otherwise it will use the path and
+# instantiate was stubbed it will use that, otherwise it will use the path and
 # subpath of the object to try to find a value.
 #
 # It will also use the optional list of parameter values to find a value.  If
@@ -120,7 +120,7 @@ func _find_stub(obj, method, parameters=null):
 # If it cannot find anything that matches then null is returned.for
 #
 # Parameters
-# obj:  this should be an instance of a doubled object.
+# obj:  this should be an instantiate of a doubled object.
 # method:  the method called
 # parameters:  optional array of parameter vales to find a return value for.
 func get_return(obj, method, parameters=null):

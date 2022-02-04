@@ -43,7 +43,7 @@ func test_are_points_clockwise():
 	add_child_autofree(shape)
 	var points_clockwise = [Vector2(-10, -10), Vector2(10, -10), Vector2(10, 10), Vector2(-10, 10)]
 	var points_c_clockwise = points_clockwise.duplicate()
-	points_c_clockwise.invert()
+	points_c_clockwise.reverse()
 
 	shape.add_points(points_clockwise)
 	assert_true(shape.are_points_clockwise())

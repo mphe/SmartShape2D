@@ -3,7 +3,7 @@
 # run hooks.
 # ------------------------------------------------------------------------------
 
-# This is the instance of GUT that is running the tests.  You can get
+# This is the instantiate of GUT that is running the tests.  You can get
 # information about the run from this object.  This is set by GUT when the
 # script is instantiated.
 var gut  = null

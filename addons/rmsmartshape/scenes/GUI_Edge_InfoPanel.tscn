@@ -1,18 +1,18 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://k2t8vsfkv5ge"]
 
-[ext_resource path="res://addons/rmsmartshape/assets/GUI_Theme.tres" type="Theme" id=1]
-[ext_resource path="res://addons/rmsmartshape/scenes/GUI_Edge_InfoPanel.gd" type="Script" id=2]
+[ext_resource type="Theme" uid="uid://bp6xpt35lltrh" path="res://addons/rmsmartshape/assets/GUI_Theme.tres" id="1"]
+[ext_resource type="Script" path="res://addons/rmsmartshape/scenes/GUI_Edge_InfoPanel.gd" id="2"]
 
 [node name="GUI_Edge_InfoPanel" type="PanelContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = -918.0
-margin_bottom = -486.0
+offset_right = -918.0
+offset_bottom = -486.0
 mouse_filter = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme = ExtResource( 1 )
-script = ExtResource( 2 )
+theme = ExtResource( "1" )
+script = ExtResource( "2" )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -27,108 +27,106 @@ p_btn_clear_edge_material = NodePath("Container/Override/ClearMaterial")
 p_lbl_edge_material = NodePath("Container/Override/lblMaterial")
 
 [node name="Panel" type="Panel" parent="."]
-margin_left = 3.0
-margin_top = 3.0
-margin_right = 133.0
-margin_bottom = 219.0
+offset_left = 6.0
+offset_top = 4.0
+offset_right = 153.0
+offset_bottom = 220.0
 mouse_filter = 2
 
 [node name="Container" type="VBoxContainer" parent="."]
-margin_left = 3.0
-margin_top = 3.0
-margin_right = 133.0
-margin_bottom = 219.0
+offset_left = 6.0
+offset_top = 4.0
+offset_right = 153.0
+offset_bottom = 220.0
 
 [node name="Properties" type="VBoxContainer" parent="Container"]
-margin_right = 130.0
-margin_bottom = 24.0
+offset_right = 147.0
+offset_bottom = 32.0
 mouse_filter = 2
 
 [node name="IDX" type="Label" parent="Container/Properties"]
-margin_right = 130.0
-margin_bottom = 24.0
+offset_right = 147.0
+offset_bottom = 32.0
 text = "IDX: [1,2]"
 
 [node name="Functions" type="VBoxContainer" parent="Container"]
-margin_top = 28.0
-margin_right = 130.0
-margin_bottom = 48.0
+offset_top = 36.0
+offset_right = 147.0
+offset_bottom = 67.0
 mouse_filter = 2
 
 [node name="Make Inner Curve" type="Button" parent="Container/Functions"]
 visible = false
-margin_right = 140.0
-margin_bottom = 20.0
+offset_right = 140.0
+offset_bottom = 20.0
 text = "Make Inner Curve"
 
 [node name="Make Outer Curve" type="Button" parent="Container/Functions"]
 visible = false
-margin_top = 24.0
-margin_right = 140.0
-margin_bottom = 44.0
+offset_top = 24.0
+offset_right = 140.0
+offset_bottom = 44.0
 text = "Make Outer Curve"
 
 [node name="MaterialOverride" type="Button" parent="Container/Functions"]
-margin_right = 130.0
-margin_bottom = 20.0
+offset_right = 147.0
+offset_bottom = 31.0
 toggle_mode = true
 text = "Material Override"
 
 [node name="Override" type="VBoxContainer" parent="Container"]
-margin_top = 52.0
-margin_right = 130.0
-margin_bottom = 160.0
+offset_top = 71.0
+offset_right = 147.0
+offset_bottom = 216.0
 
 [node name="HSeparator" type="HSeparator" parent="Container/Override"]
-margin_right = 130.0
-margin_bottom = 4.0
+offset_right = 147.0
+offset_bottom = 4.0
 
 [node name="Render" type="CheckBox" parent="Container/Override"]
-margin_top = 8.0
-margin_right = 130.0
-margin_bottom = 32.0
-pressed = true
+offset_top = 8.0
+offset_right = 147.0
+offset_bottom = 39.0
 text = "Render"
 
 [node name="Weld" type="CheckBox" parent="Container/Override"]
 visible = false
-margin_top = 36.0
-margin_right = 130.0
-margin_bottom = 60.0
-pressed = true
+offset_top = 36.0
+offset_right = 130.0
+offset_bottom = 60.0
 text = "Weld"
 
 [node name="Z_Index" type="HBoxContainer" parent="Container/Override"]
 visible = false
-margin_top = 64.0
-margin_right = 130.0
-margin_bottom = 88.0
+offset_top = 64.0
+offset_right = 130.0
+offset_bottom = 88.0
 
 [node name="lbl" type="Label" parent="Container/Override/Z_Index"]
-margin_right = 20.0
-margin_bottom = 24.0
+offset_right = 20.0
+offset_bottom = 24.0
 text = "Z:"
 
 [node name="Z_index" type="SpinBox" parent="Container/Override/Z_Index"]
-margin_left = 24.0
-margin_right = 98.0
-margin_bottom = 24.0
+offset_left = 24.0
+offset_right = 98.0
+offset_bottom = 24.0
 min_value = -100.0
 
 [node name="SetMaterial" type="Button" parent="Container/Override"]
-margin_top = 36.0
-margin_right = 130.0
-margin_bottom = 56.0
+offset_top = 43.0
+offset_right = 147.0
+offset_bottom = 74.0
 text = "Set Material"
 
 [node name="ClearMaterial" type="Button" parent="Container/Override"]
-margin_top = 60.0
-margin_right = 130.0
-margin_bottom = 80.0
+offset_top = 78.0
+offset_right = 147.0
+offset_bottom = 109.0
 text = "Clear Material"
 
 [node name="lblMaterial" type="Label" parent="Container/Override"]
-margin_top = 84.0
-margin_right = 130.0
-margin_bottom = 108.0
+offset_top = 113.0
+offset_right = 147.0
+offset_bottom = 145.0
 text = "[No Material]"

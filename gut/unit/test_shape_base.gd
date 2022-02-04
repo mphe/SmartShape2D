@@ -176,8 +176,8 @@ var width_params = [1.0, 1.5, 0.5, 0.0, 10.0, -1.0]
 func test_build_quad_no_texture(width = use_parameters(width_params)):
 	var pt: Vector2 = Vector2(0,0)
 	var pt_next: Vector2 = Vector2(16,0)
-	var tex: Texture = null
-	var tex_normal: Texture = null
+	var tex: Texture2D = null
+	var tex_normal: Texture2D = null
 	var size: Vector2 = Vector2(8,8)
 	var flip_x: bool = false
 	var flip_y: bool = false
@@ -208,9 +208,9 @@ func test_build_quad_no_texture(width = use_parameters(width_params)):
 func test_build_quad_with_texture(width_scale = use_parameters(width_params)):
 	var pt: Vector2 = Vector2(0,0)
 	var pt_next: Vector2 = Vector2(16,0)
-	var tex: Texture = TEST_TEXTURE
+	var tex: Texture2D = TEST_TEXTURE
 	var tex_height = tex.get_size().y
-	var tex_normal: Texture = null
+	var tex_normal: Texture2D = null
 	var size: Vector2 = Vector2(8,8)
 	var flip_x: bool = false
 	var flip_y: bool = false
@@ -239,7 +239,7 @@ func test_build_quad_with_texture(width_scale = use_parameters(width_params)):
 	assert_quad_point_eq(gut,q,Vector2(0, half_width_n),Vector2(0,half_width),Vector2(16,half_width),Vector2(16,half_width_n),variance)
 
 func test_should_edge_generate_corner():
-	# L Shape
+	# L Shape3D
 	var pt_prev: Vector2 = Vector2(-16, 00)
 	var pt: Vector2 =      Vector2(000, 00)
 	var pt_next: Vector2 = Vector2(000, 16)
@@ -248,7 +248,7 @@ func test_should_edge_generate_corner():
 	corner = SS2D_Shape_Base.edge_should_generate_corner(pt_prev, pt, pt_next, true)
 	assert_eq(corner, SS2D_Quad.CORNER.INNER)
 
-	# V Shape
+	# V Shape3D
 	pt_prev = Vector2(-8, -8)
 	pt =      Vector2(00, 00)
 	pt_next = Vector2(-8, 08)
@@ -261,9 +261,9 @@ func test_build_corner_quad():
 	var pt_prev: Vector2 = Vector2(-16, 00)
 	var pt: Vector2 =      Vector2(000, 00)
 	var pt_next: Vector2 = Vector2(000, 16)
-	var tex: Texture = TEST_TEXTURE
+	var tex: Texture2D = TEST_TEXTURE
 	var tex_height = tex.get_size().y
-	var tex_normal: Texture = null
+	var tex_normal: Texture2D = null
 	var width  = 1.0
 	var width_prev  = 1.0
 	var size: Vector2 = Vector2(8,8)
@@ -364,7 +364,7 @@ func test_weld_quads():
 	assert_quad_point_eq(gut,left, left.pt_a, left.pt_b, pt_bottom, pt_top)
 	assert_quad_point_eq(gut,right, pt_top, pt_bottom, right.pt_c, right.pt_d)
 
-func create_shape_material_with_equal_normal_ranges(edge_materials_count:int=4, tex:Texture=TEST_TEXTURE)->SS2D_Material_Shape:
+func create_shape_material_with_equal_normal_ranges(edge_materials_count:int=4, tex:Texture2D=TEST_TEXTURE)->SS2D_Material_Shape:
 	var edge_materials = []
 	var edge_materials_meta = []
 	for i in range(0, edge_materials_count, 1):

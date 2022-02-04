@@ -56,7 +56,7 @@ func test_generate_mesh_from_quad_sequence():
 
 func generate_quads(
 	amnt: int,
-	tex: Texture = null,
+	tex: Texture2D = null,
 	indicies_to_change: Array = [],
 	extents: Vector2 = Vector2(16.0, 16.0)
 ) -> Array:

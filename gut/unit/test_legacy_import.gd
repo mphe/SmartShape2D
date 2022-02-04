@@ -23,7 +23,7 @@ func test_import_open():
 	assert_eq(legacy.tessellation_stages, new_shape.tessellation_stages, "Tess Stages")
 	assert_eq(legacy.tessellation_tolerence, new_shape.tessellation_tolerence, "Tess Tolerence")
 	assert_eq(legacy.collision_bake_interval, new_shape.curve_bake_interval, "Bake Int")
-	assert_eq(legacy.collision_polygon_node, new_shape.collision_polygon_node_path, "Col Node Path")
+	assert_eq(legacy.collision_polygon_node, new_shape.collision_polygon_node_path, "Col Node Path3D")
 
 	# Point Test
 	assert_eq(legacy.get_point_count(), new_shape.get_point_count(), "Point Count")
@@ -61,7 +61,7 @@ func test_import_closed():
 	assert_eq(legacy.tessellation_stages, new_shape.tessellation_stages, "Tess Stages")
 	assert_eq(legacy.tessellation_tolerence, new_shape.tessellation_tolerence, "Tess Tolerence")
 	assert_eq(legacy.collision_bake_interval, new_shape.curve_bake_interval, "Bake Int")
-	assert_eq(legacy.collision_polygon_node, new_shape.collision_polygon_node_path, "Col Node Path")
+	assert_eq(legacy.collision_polygon_node, new_shape.collision_polygon_node_path, "Col Node Path3D")
 
 	# Point Test
 	assert_eq(legacy.get_point_count(), new_shape.get_point_count(), "Point Count")
