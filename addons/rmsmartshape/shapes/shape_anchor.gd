@@ -2,7 +2,7 @@
 class_name SS2D_Shape_Anchor
 extends Node2D
 
-@icon("../assets/Anchor.svg")
+@icon("res://addons/rmsmartshape/assets/Anchor.svg")
 
 const DEBUG_DRAW_LINE_LENGTH = 128.0
 

@@ -1,7 +1,7 @@
 @tool
 extends SS2D_Shape_Base
 class_name SS2D_Shape_Open
-@icon("../assets/open_shape.png")
+@icon("res://addons/rmsmartshape/assets/open_shape.png")
 
 #########
 # GODOT #

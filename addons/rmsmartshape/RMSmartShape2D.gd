@@ -1,7 +1,7 @@
 @tool
 extends Node2D
 class_name RMSmartShape2D
-@icon("./assets/LEGACY_shape.png")
+@icon("res://addons/rmsmartshape/assets/LEGACY_shape.png")
 
 # - This class assumes that points are in clockwise orientation
 # - This class does not support polygons with a counter-clockwise orientation

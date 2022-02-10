@@ -1,7 +1,7 @@
 @tool
 extends SS2D_Shape_Base
 class_name SS2D_Shape_Closed
-@icon("../assets/closed_shape.png")
+@icon("res://addons/rmsmartshape/assets/closed_shape.png")
 
 ##########
 # CLOSED #

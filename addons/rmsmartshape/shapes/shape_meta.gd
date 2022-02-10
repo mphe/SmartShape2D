@@ -1,7 +1,7 @@
 @tool
 extends SS2D_Shape_Base
 class_name SS2D_Shape_Meta
-@icon("../assets/meta_shape.png")
+@icon("res://addons/rmsmartshape/assets/meta_shape.png")
 
 # This shape will set the point_array data of all children shapes
 

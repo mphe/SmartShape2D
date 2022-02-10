@@ -1,7 +1,7 @@
 @tool
 extends Node2D
 class_name RMSmartShapeAnchor2D
-@icon("./assets/LEGACY_shape_anchor.png")
+@icon("res://addons/rmsmartshape/assets/LEGACY_shape_anchor.png")
 
 @export_node_path var monitored_shape : set = _set_monitored_shape
 @export var track_control_point: int : set = _set_track_control_point
