@@ -872,6 +872,10 @@ func draw_vert_handles(overlay: Control, t: Transform2D, verts, control_points: 
     ):
         offset *= width_scaling
         width_handle_key = current_action.keys[0]
+
+    if width_handle_key == -1:
+        return
+
     var width_handle_normal = _get_vert_normal(t, verts, shape.get_point_index(width_handle_key))
     var vertex_position: Vector2 = t * shape.get_point_position(width_handle_key)
     var icon_position: Vector2 = vertex_position + width_handle_normal * offset
@@ -919,15 +923,16 @@ func draw_new_point_preview(overlay: Control):
     var color = Color(1, 1, 1, .5)
     var width = 2
 
-    var a
     var mouse = overlay.get_local_mouse_position()
-    if is_shape_closed(shape):
-        a = t * verts[verts.size() - 2]
-        var b = t * verts[0]
-        overlay.draw_line(mouse,b,color,width * .5)
-    else:
-        a = t * verts[verts.size() - 1]
-    overlay.draw_line(mouse,a,color,width)
+    if verts.size() > 0:
+        var a: Vector2
+        if is_shape_closed(shape) and verts.size() > 1:
+            a = t * verts[verts.size() - 2]
+            var b = t * verts[0]
+            overlay.draw_line(mouse,b,color,width * .5)
+        else:
+            a = t * verts[verts.size() - 1]
+        overlay.draw_line(mouse, a, color, width)
     overlay.draw_texture(ICON_ADD_HANDLE, mouse - ICON_ADD_HANDLE.get_size() * 0.5)
 
 
