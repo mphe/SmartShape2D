@@ -193,5 +193,5 @@ func refresh():
     update()
 
 func _draw():
-    if Engine.editor_hint == true:
+    if Engine.is_editor_hint() == true:
         draw_line(Vector2.ZERO, Vector2(0,-normal_length), self.modulate)

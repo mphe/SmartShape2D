@@ -45,7 +45,7 @@ func _ready():
     edge_material_selector.dialog_hide_on_ok = true
     edge_material_selector.show_hidden_files = true
     edge_material_selector.mode_overrides_title = false
-    edge_material_selector.window_title = "Select Edge Material"
+    edge_material_selector.title = "Select Edge Material"
     edge_material_selector.filters = PackedStringArray(["*.tres"])
     edge_material_selector.connect("file_selected", self._on_set_edge_material_file_selected)
     add_child(edge_material_selector)

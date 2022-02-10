@@ -257,7 +257,7 @@ func _draw():
                 draw_mesh(m, mesh.texture, mesh.normal_texture)
 
     # Draw edge quads for debug purposes (ONLY IN EDITOR)
-    if Engine.editor_hint and editor_debug:
+    if Engine.is_editor_hint() and editor_debug:
         for q in _quads:
             var t: QuadInfo = q
             draw_line(t.pt_a, t.pt_b, t.color)
@@ -336,7 +336,7 @@ func _set_close_shape(value):
     closed_shape = value
     fix_close_shape()
     emit_signal("on_closed_change")
-    if Engine.editor_hint:
+    if Engine.is_editor_hint():
         notify_property_list_changed()
 
 
@@ -353,7 +353,7 @@ func _set_curve(value: Curve2D):
         set_as_dirty()
         emit_signal("points_modified")
 
-        if Engine.editor_hint:
+        if Engine.is_editor_hint():
             notify_property_list_changed()
 
 
@@ -365,7 +365,7 @@ func set_point_width(width: float, at_position: int):
         set_as_dirty()
         emit_signal("points_modified")
 
-        if Engine.editor_hint:
+        if Engine.is_editor_hint():
             notify_property_list_changed()
 
 
@@ -382,7 +382,7 @@ func set_point_texture_index(point_index: int, tex_index: int):
         set_as_dirty()
         emit_signal("points_modified")
 
-        if Engine.editor_hint:
+        if Engine.is_editor_hint():
             notify_property_list_changed()
 
 
@@ -399,7 +399,7 @@ func set_point_texture_flip(flip: bool, at_position: int):
         set_as_dirty()
         emit_signal("points_modified")
 
-        if Engine.editor_hint:
+        if Engine.is_editor_hint():
             notify_property_list_changed()
 
 
@@ -1529,7 +1529,7 @@ func invert_point_order():
     # Update and set as dirty
     set_as_dirty()
 
-    if Engine.editor_hint:
+    if Engine.is_editor_hint():
         notify_property_list_changed()
 
 func clear_points():
@@ -1562,7 +1562,7 @@ func _add_point_update():
     set_as_dirty()
     emit_signal("points_modified")
 
-    if Engine.editor_hint:
+    if Engine.is_editor_hint():
         notify_property_list_changed()
 
 func _is_curve_index_in_range(i: int) -> bool:
@@ -1591,7 +1591,7 @@ func remove_point(idx: int):
         set_as_dirty()
         emit_signal("points_modified")
 
-        if Engine.editor_hint:
+        if Engine.is_editor_hint():
             notify_property_list_changed()
 
 
@@ -1603,7 +1603,7 @@ func resize_points(size: int):
     if vertex_properties.resize(size):
         set_as_dirty()
 
-        if Engine.editor_hint:
+        if Engine.is_editor_hint():
             notify_property_list_changed()
 
 

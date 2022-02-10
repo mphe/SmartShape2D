@@ -43,7 +43,7 @@ enum ORIENTATION { COLINEAR, CLOCKWISE, C_CLOCKWISE }
 @export var _points: Resource = SS2D_Point_Array.new() : get = get_point_array, set = _set_point_array
 # Dictionary of (Array of 2 keys) to (SS2D_Material_Edge_Metadata)
 # Deprecated, exists for Support of older versions
-@export var material_overrides: Dictionary = null : set = set_material_overrides
+@export var material_overrides: Dictionary : set = set_material_overrides
 
 ####################
 # DETAILED EXPORTS #
@@ -61,23 +61,16 @@ enum ORIENTATION { COLINEAR, CLOCKWISE, C_CLOCKWISE }
 # """
 
 # COLLISION #
-#export (float)
 var collision_size: float = 32 : set = set_collision_size
-#export (float)
 var collision_offset: float = 0.0 : set = set_collision_offset
-#export (NodePath)
 var collision_polygon_node_path: NodePath = ""
 
 # EDGES #
-#export (bool)
 var flip_edges: bool = false : set = set_flip_edges
-#export (bool)
 var render_edges: bool = true : set = set_render_edges
 
 # TESSELLATION #
-#export (int, 1, 8)
 var tessellation_stages: int = 5 : set = set_tessellation_stages
-#export (float, 1, 8)
 var tessellation_tolerence: float = 4.0 : set = set_tessellation_tolerence
 
 
@@ -166,22 +159,19 @@ func get_point_array() -> SS2D_Point_Array:
 
 # This wrapper is needed, otherwise the compiler complains about function signature mismatch
 func _set_point_array(a: SS2D_Point_Array):
-    set_point_array(a)
-
-
-func set_point_array(a: SS2D_Point_Array, make_unique: bool = true):
     if _points != null:
         if _points.is_connected("material_override_changed", self._handle_material_override_change):
             _points.disconnect("material_override_changed", self._handle_material_override_change)
-    if make_unique:
-        _points = a.duplicate(true)
-    else:
-        _points = a
+    _points = a
     _points.connect("material_override_changed", self._handle_material_override_change)
     clear_cached_data()
     _update_curve(_points)
     set_as_dirty()
     notify_property_list_changed()
+
+
+func set_point_array(a: SS2D_Point_Array, make_unique: bool = true):
+    _set_point_array(a.duplicate(true) if make_unique else a)
 
 
 func set_flip_edges(b: bool):
@@ -247,7 +237,7 @@ func set_light_mask(value):
 
 
 func set_render_node_owners(v: bool):
-    if Engine.editor_hint:
+    if Engine.is_editor_hint():
         # Force scene tree update
         var render_parent = _get_rendering_nodes_parent()
         var owner = null
@@ -614,7 +604,7 @@ func _get_rendering_nodes_parent() -> SS2D_Shape_Render:
         render_parent.name = render_parent_name
         render_parent.light_mask = light_mask
         add_child(render_parent)
-        if editor_debug and Engine.editor_hint:
+        if editor_debug and Engine.is_editor_hint():
             render_parent.set_owner(get_tree().edited_scene_root)
     else:
         render_parent = get_node(render_parent_name)
@@ -648,7 +638,7 @@ func _create_rendering_nodes(size: int) -> bool:
             var child = SS2D_Shape_Render.new()
             child.light_mask = light_mask
             render_parent.add_child(child)
-            if editor_debug and Engine.editor_hint:
+            if editor_debug and Engine.is_editor_hint():
                 child.set_owner(get_tree().edited_scene_root)
     return true
 
@@ -680,7 +670,7 @@ func _draw():
         var render_node = render_nodes[i]
         render_node.set_mesh(m)
 
-    if editor_debug and Engine.editor_hint:
+    if editor_debug and Engine.is_editor_hint():
         _draw_debug(sort_by_z_index(_edges))
 
 

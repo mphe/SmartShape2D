@@ -65,8 +65,8 @@ func _set_point_out(v: Vector2):
     notify_property_list_changed()
 
 
-func _set_properties(other:SS2D_VertexProperties):
-    if not properties.equals(other):
+func _set_properties(other: SS2D_VertexProperties):
+    if properties == null or not properties.equals(other):
         properties = other.duplicate(true)
         emit_signal("changed")
     notify_property_list_changed()

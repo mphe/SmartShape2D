@@ -9,7 +9,13 @@ class_name SS2D_NormalRange
 @export_range(0, 360, 0.0) var distance = 0.0 : set = set_distance
 
 # Deprecated variable
-var end = 0.0 : set = set_end
+# COMPATIBILITY FIX:
+# This class used to use "begin" and "end" variables to define the range
+# Now uses Begin + Distance and end is used for the widget
+# The following line of code maintains compatiblity with older versions of SS2D (2.2 Backward)
+# NOTE to 4.0 compatibility: To prevent cyclic recursive calls of set_distance
+# and set_end, this property defines both a setter and getter, wrapping begin + distance.
+var end : set = set_end, get = get_end
 
 # This is a hack to support the custom editor, needed a property
 # to exist to lock the TextureProgressBar to.  Makes it flow better
@@ -19,27 +25,21 @@ var end = 0.0 : set = set_end
 
 func set_distance(f: float):
     distance = f
-    # Deprecated
-    end = begin + distance
     emit_signal("changed")
 
 
 func set_begin(f: float):
     begin = f
-    # Deprecated
-    end = begin + distance
     emit_signal("changed")
 
 
 func set_end(f: float):
-    end = f
-    # COMPATIBILITY FIX:
-    # This class used to use "begin" and "end" variables to define the range
-    # Now uses Begin + Distance and end is used for the widget
-    # The following line of code maintains compatiblity with older versions of SS2D (2.2 Backward)
-    # TODO This function
-    distance = end - begin
-    emit_signal("changed")
+    # Calls changed signal through set_distance()
+    distance = f - begin
+
+
+func get_end() -> float:
+    return begin + distance
 
 
 func _to_string() -> String:

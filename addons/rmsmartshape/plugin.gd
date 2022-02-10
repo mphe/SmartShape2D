@@ -324,13 +324,13 @@ func _gui_update_info_panels():
 
 # Called when saving
 # https://docs.godotengine.org/en/3.2/classes/class_editorplugin.html?highlight=switch%20scene%20tab
-func apply_changes():
+func _apply_changes():
     gui_point_info_panel.visible = false
     gui_edge_info_panel.visible = false
 
 
 func _init():
-    pass
+     pass
 
 
 func _ready():
@@ -353,8 +353,6 @@ func _enter_tree():
     plugin = preload("res://addons/rmsmartshape/inpsector_plugin.gd").new()
     if plugin != null:
         add_inspector_plugin(plugin)
-
-    pass
 
 
 func _exit_tree():
@@ -379,7 +377,7 @@ func _forward_canvas_gui_input(event):
 
     var et = get_et()
     var grab_threshold = get_editor_interface().get_editor_settings().get(
-        "editors/poly_editor/point_grab_radius"
+        "editors/polygon_editor/point_grab_radius"
     )
 
     var key_return_value = false
@@ -399,7 +397,7 @@ func _forward_canvas_gui_input(event):
     return return_value
 
 
-func handles(object):
+func _handles(object):
     tb_hb.hide()
     tb_hb_legacy_import.hide()
     update_overlays()
@@ -413,7 +411,7 @@ func handles(object):
     return rslt
 
 
-func edit(object):
+func _edit(object):
     on_edge = false
     deselect_verts()
     if is_shape_valid(shape):
@@ -449,7 +447,7 @@ func edit(object):
     update_overlays()
 
 
-func make_visible(visible):
+func _make_visible(visible):
     pass
 
 
@@ -842,14 +840,14 @@ func draw_mode_edit_vert(overlay: Control, show_vert_handles: bool = true):
 
 func draw_shape_outline(overlay: Control, t: Transform2D, points, color = null, width = 2.0):
     # Draw Outline
-    var prev_pt: Vector2 = null
+    var prev_pt: Vector2
     if color == null:
         color = shape.modulate
     for i in range(0, points.size(), 1):
-        var pt = points[i]
-        if prev_pt != null:
-            overlay.draw_line(prev_pt, t * pt, color, width)
-        prev_pt = t * pt
+        var pt = t * points[i]
+        if i != 0:
+            overlay.draw_line(prev_pt, pt, color, width)
+        prev_pt = pt
 
 
 func draw_vert_handles(overlay: Control, t: Transform2D, verts, control_points: bool):
@@ -1445,10 +1443,8 @@ func _input_motion_move_width_handle(mouse_position: Vector2, scale: Vector2) ->
     return true
 
 
+# Will Return index of closest vert to point
 func get_closest_vert_to_point(s: SS2D_Shape_Base, p: Vector2) -> int:
-    """
-    Will Return index of closest vert to point
-    """
     var gt = shape.get_global_transform()
     var verts = s.get_vertices()
     var transformed_point = gt.affine_inverse() * p
@@ -1564,7 +1560,7 @@ func _input_handle_mouse_motion_event(
     return false
 
 
-func _get_vert_normal(t: Transform2D, verts, i: int):
+func _get_vert_normal(t: Transform2D, verts, i: int) -> Vector2:
     var point: Vector2 = t * verts[i]
     var prev_point: Vector2 = t * verts[(i - 1) % verts.size()]
     var next_point: Vector2 = t * verts[(i + 1) % verts.size()]

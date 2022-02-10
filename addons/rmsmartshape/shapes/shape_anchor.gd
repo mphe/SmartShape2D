@@ -1,7 +1,6 @@
 @tool
-class_name SS2D_Shape_Anchor
 extends Node2D
-
+class_name SS2D_Shape_Anchor
 @icon("res://addons/rmsmartshape/assets/Anchor.svg")
 
 const DEBUG_DRAW_LINE_LENGTH = 128.0
@@ -198,5 +197,5 @@ func refresh():
 
 
 func _draw():
-    if Engine.editor_hint and debug_draw:
+    if Engine.is_editor_hint() and debug_draw:
         draw_line(Vector2.ZERO, Vector2(0, -DEBUG_DRAW_LINE_LENGTH), self.modulate)
