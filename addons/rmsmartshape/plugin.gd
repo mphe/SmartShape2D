@@ -1174,14 +1174,14 @@ func _input_handle_keyboard_event(event: InputEventKey) -> bool:
     var kb: InputEventKey = event
     if _is_valid_keyboard_scancode(kb):
         if current_action.is_single_vert_selected():
-            if kb.pressed and kb.scancode == KEY_SPACE:
+            if kb.pressed and kb.keycode == KEY_SPACE:
                 var key = current_action.current_point_key()
                 shape.set_point_texture_flip(key, not shape.get_point_texture_flip(key))
                 shape.set_as_dirty()
                 shape.update()
                 _gui_update_info_panels()
 
-        if kb.pressed and kb.scancode == KEY_ESCAPE:
+        if kb.pressed and kb.keycode == KEY_ESCAPE:
             # Hide edge_info_panel
             if gui_edge_info_panel.visible:
                 gui_edge_info_panel.visible = false
@@ -1189,7 +1189,7 @@ func _input_handle_keyboard_event(event: InputEventKey) -> bool:
             if current_mode == MODE.CREATE_VERT:
                 _enter_mode(MODE.EDIT_VERT)
 
-        if kb.scancode == KEY_CTRL:
+        if kb.keycode == KEY_CTRL:
             if kb.pressed and not kb.echo:
                 on_edge = false
                 current_action = select_verticies([closest_key], ACTION_VERT.NONE)
@@ -1197,7 +1197,7 @@ func _input_handle_keyboard_event(event: InputEventKey) -> bool:
                 deselect_verts()
             update_overlays()
 
-        if kb.scancode == KEY_ALT:
+        if kb.keycode == KEY_ALT:
             update_overlays()
 
         return true
@@ -1205,7 +1205,7 @@ func _input_handle_keyboard_event(event: InputEventKey) -> bool:
 
 
 func _is_valid_keyboard_scancode(kb: InputEventKey) -> bool:
-    match kb.scancode:
+    match kb.keycode:
         KEY_ESCAPE:
             return true
         KEY_ENTER:
