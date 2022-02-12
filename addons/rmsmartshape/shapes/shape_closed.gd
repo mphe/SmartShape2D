@@ -41,7 +41,7 @@ func remove_point(key: int):
 
 func set_point_array(a: SS2D_Point_Array, make_unique: bool = true):
     if make_unique:
-        _points = a.duplicate(true)
+        _points = a.duplicate_fixed(true)
     else:
         _points = a
     _close_shape()
@@ -351,7 +351,7 @@ static func get_meta_material_index_mapping(s_material: SS2D_Material_Shape, ver
 func _merge_index_maps(imaps:Array, verts:Array) -> Array:
     # See if any edges have both the first (0) and last idx (size)
     # Merge them into one if so
-    var final_edges = imaps.duplicate()
+    var final_edges = imaps.duplicate()  # WARNING: duplicate() is fine as long as it is not recursive. Otherwise each element needs to be duplicated using duplicate_fixed().
     var edges_by_material = SS2D_IndexMap.index_map_array_sort_by_object(final_edges)
     # Erase any with null material
     edges_by_material.erase(null)

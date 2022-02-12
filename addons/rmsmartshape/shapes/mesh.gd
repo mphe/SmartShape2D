@@ -31,8 +31,9 @@ func _init(
     material = mat
 
 
-func duplicate(sub_resource: bool = false):
-    var _new = __new()
+# FIXME: See https://github.com/godotengine/godot/issues/58031
+func duplicate_fixed(sub_resource: bool = false):
+    var _new = SS2D_Mesh.new()
     _new.texture = texture
     _new.texture_normal = texture_normal
     _new.flip_texture = flip_texture
@@ -83,8 +84,3 @@ func render(ci: CanvasItem):
     for mesh in meshes:
         # FIXME: pass texture_normal when the feature is supported
         ci.draw_mesh(mesh, texture)
-
-
-# Workaround (class cannot reference itself)
-func __new() -> SS2D_Point:
-    return get_script().new()

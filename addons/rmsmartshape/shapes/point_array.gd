@@ -122,16 +122,16 @@ func get_point_key_at_index(idx: int) -> int:
 
 
 func get_point_at_index(idx: int) -> int:
-    return _points[_point_order[idx]].duplicate(true)
+    return _points[_point_order[idx]].duplicate_fixed(true)
 
 
 func get_point(key: int) -> int:
-    return _points[key].duplicate(true)
+    return _points[key].duplicate_fixed(true)
 
 
 func set_point(key: int, value: SS2D_Point):
     if has_point(key):
-        _points[key] = value.duplicate(true)
+        _points[key] = value.duplicate_fixed(true)
 
 
 func get_point_count() -> int:
@@ -236,7 +236,7 @@ func set_point_properties(key: int, value: SS2D_VertexProperties):
 
 func get_point_properties(key: int) -> SS2D_VertexProperties:
     if has_point(key):
-        return _points[key].properties.duplicate(true)
+        return _points[key].properties.duplicate_fixed(true)
     var new_props = SS2D_VertexProperties.new()
     return new_props
 
@@ -384,13 +384,14 @@ func debug_print():
         print("%s = P:%s | I:%s | O:%s" % [k, pos, _in, out])
 
 
-func duplicate(sub_resource: bool = false):
-    var _new = __new()
+# FIXME: See https://github.com/godotengine/godot/issues/58031
+func duplicate_fixed(sub_resource: bool = false):
+    var _new = SS2D_Point_Array.new()
     _new._next_key = _next_key
     if sub_resource:
         var new_point_dict = {}
         for k in _points:
-            new_point_dict[k] = _points[k].duplicate(true)
+            new_point_dict[k] = _points[k].duplicate_fixed(true)
         _new._points = new_point_dict
         _new._point_order = _point_order.duplicate(true)
 
@@ -407,11 +408,6 @@ func duplicate(sub_resource: bool = false):
         _new._constraints = _constraints
         _new._material_overrides = _material_overrides
     return _new
-
-
-# Workaround (class cannot reference itself)
-func __new():
-    return get_script().new()
 
 
 ######################

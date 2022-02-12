@@ -32,13 +32,14 @@ func equals(other: SS2D_Point) -> bool:
     return true
 
 
-func duplicate(sub_resource: bool = false):
-    var _new = __new()
+# FIXME: See https://github.com/godotengine/godot/issues/58031
+func duplicate_fixed(sub_resource: bool = false):
+    var _new = SS2D_Point.new()
     _new.position = position
     _new.point_in = point_in
     _new.point_out = point_out
     if sub_resource:
-        _new.properties = properties.duplicate(true)
+        _new.properties = properties.duplicate_fixed(true)
     else:
         _new.properties = properties
     return _new
@@ -67,11 +68,6 @@ func _set_point_out(v: Vector2):
 
 func _set_properties(other: SS2D_VertexProperties):
     if properties == null or not properties.equals(other):
-        properties = other.duplicate(true)
+        properties = other.duplicate_fixed(true)
         emit_signal("changed")
     notify_property_list_changed()
-
-
-# Workaround (class cannot reference itself)
-func __new() -> SS2D_Point:
-    return get_script().new()

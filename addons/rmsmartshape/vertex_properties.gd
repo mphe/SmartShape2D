@@ -31,17 +31,13 @@ func _init():
     width = 1.0
 
 
-func duplicate(_sub_resources: bool = false):
-    var _new = __new()
+# FIXME: See https://github.com/godotengine/godot/issues/58031
+func duplicate_fixed(_sub_resources: bool = false) -> SS2D_VertexProperties:
+    var _new = SS2D_VertexProperties.new()
     _new.texture_idx = texture_idx
     _new.flip = flip
     _new.width = width
     return _new
-
-
-# Workaround (class cannot reference itself)
-func __new() -> SS2D_VertexProperties:
-    return get_script().new()
 
 
 func equals(other: SS2D_VertexProperties) -> bool:

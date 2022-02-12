@@ -171,7 +171,7 @@ func _set_point_array(a: SS2D_Point_Array):
 
 
 func set_point_array(a: SS2D_Point_Array, make_unique: bool = true):
-    _set_point_array(a.duplicate(true) if make_unique else a)
+    _set_point_array(a.duplicate_fixed(true) if make_unique else a)
 
 
 func set_flip_edges(b: bool):
@@ -652,7 +652,7 @@ func _draw_flatten_meshes_array(meshes: Array) -> Array:
     var flat_meshes = []
     for ss2d_mesh in meshes:
         for godot_mesh in ss2d_mesh.meshes:
-            var new_mesh = ss2d_mesh.duplicate(false)
+            var new_mesh = ss2d_mesh.duplicate_fixed(false)
             new_mesh.meshes = [godot_mesh]
             flat_meshes.push_back(new_mesh)
     return flat_meshes
@@ -1605,7 +1605,7 @@ func _build_edge_with_material(index_map: SS2D_IndexMap,  c_offset: float, defau
                 var taper_size = taper_texture.get_size()
                 var fit = abs(taper_size.x) <= new_quad.get_length_average()
                 if fit:
-                    var taper_quad = new_quad.duplicate()
+                    var taper_quad = new_quad.duplicate_fixed()
                     taper_quad.corner = 0
                     taper_quad.texture = taper_texture
                     taper_quad.texture_normal = taper_texture_normal
@@ -1628,7 +1628,7 @@ func _build_edge_with_material(index_map: SS2D_IndexMap,  c_offset: float, defau
                 var taper_size = taper_texture.get_size()
                 var fit = abs(taper_size.x) <= new_quad.get_length_average()
                 if fit:
-                    var taper_quad = new_quad.duplicate()
+                    var taper_quad = new_quad.duplicate_fixed()
                     taper_quad.corner = 0
                     taper_quad.texture = taper_texture
                     taper_quad.texture_normal = taper_texture_normal

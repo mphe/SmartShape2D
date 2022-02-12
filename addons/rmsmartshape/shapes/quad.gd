@@ -39,8 +39,8 @@ var width_factor: float = 1.0
 func bisect() -> Array:
     var delta = pt_d - pt_a
     var delta_normal = delta.normalized()
-    var quad_left = duplicate()
-    var quad_right = duplicate()
+    var quad_left = duplicate_fixed()
+    var quad_right = duplicate_fixed()
     var mid_point = Vector2(get_length_average(), 0.0) * delta_normal
     quad_left.pt_d = pt_a + mid_point
     quad_left.pt_c = pt_b + mid_point
@@ -64,8 +64,9 @@ func matches_quad(q: SS2D_Quad) -> bool:
     return false
 
 
-func duplicate() -> SS2D_Quad:
-    var q = __new()
+# FIXME: See https://github.com/godotengine/godot/issues/58031
+func duplicate_fixed() -> SS2D_Quad:
+    var q = SS2D_Quad.new()
     q.pt_a = pt_a
     q.pt_b = pt_b
     q.pt_c = pt_c
@@ -192,11 +193,6 @@ func render_points(rad: float, intensity: float, ci: CanvasItem):
     ci.draw_circle(pt_b, rad, Color(0, 0, intensity))
     ci.draw_circle(pt_c, rad, Color(0, intensity, 0))
     ci.draw_circle(pt_d, rad, Color(intensity, 0, intensity))
-
-
-# Workaround (class cannot reference itself)
-func __new():
-    return get_script().new()
 
 
 func get_height_average() -> float:

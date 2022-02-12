@@ -12,13 +12,13 @@ static func overwrite_array_a_into_array_b(a: Array, b: Array) -> Array:
     var ret = []
     # Make equal to b; b serves as the baseline
     for bm in b:
-        ret.push_back(bm.duplicate())
+        ret.push_back(bm.duplicate_fixed())
 
     # Merge a on top of b
     var to_remove = []
     var to_add = []
     for am in a:
-        var m = am.duplicate()
+        var m = am.duplicate_fixed()
         # Check to see if any of the a indicies exist in the mm array already
         for mm in ret:
             # Find all overlapping points

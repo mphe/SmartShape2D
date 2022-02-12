@@ -10,15 +10,10 @@ var object = null
 var indicies: Array = [] : set = set_indicies
 
 
-# Workaround (class cannot reference itself)
-func __new(i: Array, o) -> SS2D_IndexMap:
-    return get_script().new(i, o)
-
-
+# FIXME: See https://github.com/godotengine/godot/issues/58031
 # Sub resource has no effect, no sub resources to duplicate
-func duplicate(sub_resource: bool = false):
-    var _new = __new(indicies, object)
-    return _new
+func duplicate_fixed(sub_resource: bool = false):
+    return SS2D_IndexMap.new(indicies, object)
 
 
 func _init(i: Array,o):
@@ -153,13 +148,13 @@ func _split_indicies_into_multiple_mappings(new_indicies: Array) -> Array:
         for i in range(0, break_idx, 1):
             sub_indicies.push_back(new_indicies[i])
         if is_index_array_valid(sub_indicies):
-            maps.push_back(__new(sub_indicies, object))
+            maps.push_back(SS2D_IndexMap.new(sub_indicies, object))
         for i in sub_indicies:
             new_indicies.erase(i)
         break_idx = find_break_in_array(new_indicies)
 
     if is_index_array_valid(new_indicies):
-        maps.push_back(__new(new_indicies, object))
+        maps.push_back(SS2D_IndexMap.new(new_indicies, object))
     return maps
 
 # Will create a new set of SS2D_IndexMaps
@@ -182,7 +177,7 @@ func remove_indicies(to_remove: Array) -> Array:
     if not is_index_array_valid(new_indicies):
         return []
     if is_array_contiguous(new_indicies):
-        return [__new(new_indicies, object)]
+        return [SS2D_IndexMap.new(new_indicies, object)]
 
     return _split_indicies_into_multiple_mappings(new_indicies)
 
@@ -211,11 +206,11 @@ func remove_edges(to_remove: Array) -> Array:
                 var set_2 = indicies.slice(idx+1, indicies.size()-1)
                 var new_maps = []
                 if is_index_array_valid(set_1):
-                    new_maps.push_back(__new(set_1, object))
+                    new_maps.push_back(SS2D_IndexMap.new(set_1, object))
                 if is_index_array_valid(set_2):
-                    new_maps.push_back(__new(set_2, object))
+                    new_maps.push_back(SS2D_IndexMap.new(set_2, object))
                 return new_maps
-        return [__new(indicies, object)]
+        return [SS2D_IndexMap.new(indicies, object)]
 
 
     # General case
@@ -235,7 +230,7 @@ func remove_edges(to_remove: Array) -> Array:
     new_edges = join_segments(new_edges)
     var new_index_mappings = []
     for e in new_edges:
-        new_index_mappings.push_back(__new(e, object))
+        new_index_mappings.push_back(SS2D_IndexMap.new(e, object))
     return new_index_mappings
 
 static func indicies_to_edges(indicies:Array)->Array:

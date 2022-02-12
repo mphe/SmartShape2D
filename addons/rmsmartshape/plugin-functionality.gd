@@ -157,7 +157,7 @@ static func get_constrained_points_to_delete(s: SS2D_Shape_Base, k: int, keys = 
 static func action_delete_point(
     update_node: Node, update_method: String, undo: UndoRedo, s: SS2D_Shape_Base, first_key: int
 ):
-    var dupe = s.get_point_array().duplicate(true)
+    var dupe = s.get_point_array().duplicate_fixed(true)
     var keys = get_constrained_points_to_delete(s, first_key)
     undo.create_action("Delete Point")
     for key in keys:

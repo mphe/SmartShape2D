@@ -24,7 +24,7 @@ func add_point(idx:int)->bool:
         new_point_idx = idx
 
     var old_idx = new_point_idx - 1
-    properties[new_point_idx] = properties[old_idx].duplicate()
+    properties[new_point_idx] = properties[old_idx].duplicate_fixed()
     return true
 
 # Returns true if changed
@@ -79,7 +79,7 @@ func __init_size(_size):
 
 func __init_class(other):
     for p in other.properties:
-        properties.push_back(p.duplicate())
+        properties.push_back(p.duplicate_fixed())
 
 ###########
 # GETTERS #
