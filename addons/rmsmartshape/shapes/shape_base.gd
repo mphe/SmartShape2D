@@ -305,7 +305,6 @@ func _set_material(value: SS2D_Material_Shape):
 
 
 func set_material_overrides(dict):
-    material_overrides = null
     if dict == null:
         return
     _points.set_material_overrides(dict)
@@ -1179,11 +1178,15 @@ func get_collision_polygon_node() -> Node:
 
 
 static func sort_by_z_index(a: Array) -> Array:
-    a.sort_custom(SS2D_Common_Functions.sort_z)
+    # NOTE: Bug: Apparently can't use static functions from another script in
+    # Array.sort_custom directly. It will throw a not-found error during execution.
+    a.sort_custom(Callable(SS2D_Common_Functions, "sort_z"))
     return a
 
 static func sort_by_int_ascending(a: Array) -> Array:
-    a.sort_custom(SS2D_Common_Functions.sort_int_ascending)
+    # NOTE: Bug: Apparently can't use static functions from another script in
+    # Array.sort_custom directly. It will throw a not-found error during execution.
+    a.sort_custom(Callable(SS2D_Common_Functions, "sort_int_ascending"))
     return a
 
 

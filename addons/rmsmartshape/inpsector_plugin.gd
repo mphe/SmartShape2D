@@ -3,14 +3,14 @@ extends EditorInspectorPlugin
 var properties = []
 var control = null
 
-func can_handle(object):
+func _can_handle(object):
     #if object is SS2D_NormalRange:
-    #	return true
+    #    return true
     if object is SS2D_NormalRange:
         #Connect
         var parms = [object]
-        if object.is_connected("changed", Callable(self,"_changed"))==false:
-            object.connect("changed", Callable(self,"_changed"),parms)
+        if not object.is_connected("changed", self._changed):
+            object.connect("changed", self._changed, parms)
         return true
     else:
         #Disconnect
@@ -18,8 +18,8 @@ func can_handle(object):
             control = null
 
         if object.has_signal("changed"):
-            if object.is_connected("changed", Callable(self,"_changed")):
-                object.disconnect("changed", Callable(self,"_changed"))
+            if object.is_connected("changed", self._changed):
+                object.disconnect("changed", self._changed)
 
     return false
 
@@ -30,7 +30,7 @@ func _ready():
 func _changed(object):
     control._value_changed()
 
-func parse_property(object, type, path, hint, hint_text, usage):
+func _parse_property(object, type, path, hint, hint_text, usage):
     if path=="edgeRendering":
         control = SS2D_NormalRangeEditorProperty.new()
         add_property_editor(" ", control)
