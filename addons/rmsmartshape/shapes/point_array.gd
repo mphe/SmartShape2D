@@ -53,7 +53,8 @@ func set_points(ps: Dictionary):
     # Called by Godot when loading from a saved scene
     for k in ps:
         var p = ps[k]
-        p.connect("changed", self._on_point_changed,[p])
+        if not p.is_connected("changed", self._on_point_changed):
+            p.connect("changed", self._on_point_changed, [p])
     _points = ps
     notify_property_list_changed()
 
