@@ -43,52 +43,52 @@ enum FITMODE {SQUISH_AND_STRETCH, CROP}
 ###########
 # SETTERS #
 ###########
-func _set_textures(ta: Array[Texture2D]):
+func _set_textures(ta):
     textures = ta
     emit_signal("changed")
 
 
-func _set_texture_normals(ta: Array[Texture2D]):
+func _set_texture_normals(ta):
     texture_normals = ta
     emit_signal("changed")
 
 
-func _set_textures_corner_outer(a: Array[Texture2D]):
+func _set_textures_corner_outer(a):
     textures_corner_outer = a
     emit_signal("changed")
 
 
-func _set_texture_normals_corner_outer(a: Array[Texture2D]):
+func _set_texture_normals_corner_outer(a):
     texture_normals_corner_outer = a
     emit_signal("changed")
 
 
-func _set_textures_corner_inner(a: Array[Texture2D]):
+func _set_textures_corner_inner(a):
     textures_corner_inner = a
     emit_signal("changed")
 
 
-func _set_texture_normals_corner_inner(a: Array[Texture2D]):
+func _set_texture_normals_corner_inner(a):
     texture_normals_corner_inner = a
     emit_signal("changed")
 
 
-func _set_textures_taper_left(a: Array[Texture2D]):
+func _set_textures_taper_left(a):
     textures_taper_left = a
     emit_signal("changed")
 
 
-func _set_texture_normals_taper_left(a: Array[Texture2D]):
+func _set_texture_normals_taper_left(a):
     texture_normals_taper_left = a
     emit_signal("changed")
 
 
-func _set_textures_taper_right(a: Array[Texture2D]):
+func _set_textures_taper_right(a):
     textures_taper_right = a
     emit_signal("changed")
 
 
-func _set_texture_normals_taper_right(a: Array[Texture2D]):
+func _set_texture_normals_taper_right(a):
     texture_normals_taper_right = a
     emit_signal("changed")
 

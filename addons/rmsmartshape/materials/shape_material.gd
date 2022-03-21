@@ -67,12 +67,12 @@ func _on_edge_material_changed():
     emit_signal("changed")
 
 
-func set_fill_textures(a: Array[Texture2D]):
+func set_fill_textures(a):
     fill_textures = a
     emit_signal("changed")
 
 
-func set_fill_texture_normals(a: Array[Texture2D]):
+func set_fill_texture_normals(a):
     fill_texture_normals = a
     emit_signal("changed")
 
@@ -82,7 +82,7 @@ func set_fill_texture_z_index(i: int):
     emit_signal("changed")
 
 
-func set_edge_meta_materials(a: Array[Resource]):
+func set_edge_meta_materials(a):
     for e in _edge_meta_materials:
         if e == null:
             continue
