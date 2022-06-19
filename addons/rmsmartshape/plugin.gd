@@ -141,8 +141,10 @@ var freehand_paint_size := 20.0
 var freehand_erase_size := 40.0
 
 # Track our mode of operation
-var current_mode: int = MODE.CREATE_VERT
-var previous_mode: int = MODE.CREATE_VERT
+# var current_mode: int = MODE.CREATE_VERT
+# var previous_mode: int = MODE.CREATE_VERT
+var current_mode: int = MODE.EDIT_VERT
+var previous_mode: int = MODE.EDIT_VERT
 
 # Undo stuff
 var undo: UndoRedo = null
@@ -203,10 +205,11 @@ func _gui_build_toolbar():
 
 	tb_vert_create = create_tool_button(ICON_CURVE_CREATE, SS2D_Strings.EN_TOOLTIP_CREATE_VERT)
 	tb_vert_create.connect("pressed", self, "_enter_mode", [MODE.CREATE_VERT])
-	tb_vert_create.pressed = true
+	# tb_vert_create.pressed = true
 
 	tb_vert_edit = create_tool_button(ICON_CURVE_EDIT, SS2D_Strings.EN_TOOLTIP_EDIT_VERT)
 	tb_vert_edit.connect("pressed", self, "_enter_mode", [MODE.EDIT_VERT])
+	tb_vert_edit.pressed = true
 
 	tb_edge_edit = create_tool_button(ICON_INTERP_LINEAR, SS2D_Strings.EN_TOOLTIP_EDIT_EDGE)
 	tb_edge_edit.connect("pressed", self, "_enter_mode", [MODE.EDIT_EDGE])
