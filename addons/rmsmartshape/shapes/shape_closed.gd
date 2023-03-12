@@ -233,22 +233,16 @@ func _on_points_modified(update_curve: bool = true) -> void:
 
 func generate_collision_points() -> PackedVector2Array:
 	var points := PackedVector2Array()
-#	var collision_width := 1.0
-#	var collision_extends := 0.0
-	var verts: PackedVector2Array = get_vertices()
-	var t_points: PackedVector2Array = get_tessellated_points()
-	if t_points.size() < 2:
-		return points
-	var indicies: Array[int] = []
-	for i in range(verts.size()):
-		indicies.push_back(i)
-	var edge_data := SS2D_IndexMap.new(indicies, null)
+	var edge := _prepare_generate_collision_points(1.0)
 	# size of 1, has no meaning in a closed shape
-	var edge: SS2D_Edge = _build_edge_with_material(edge_data, collision_offset - 1.0, 1)
-	_weld_quad_array(edge.quads, false)
+
+	if not edge:
+		return points
+
 	var first_quad: SS2D_Quad = edge.quads[0]
 	var last_quad: SS2D_Quad = edge.quads.back()
 	weld_quads(last_quad, first_quad, 1.0)
+
 	if not edge.quads.is_empty():
 		for quad in edge.quads:
 			if quad.corner == SS2D_Quad.CORNER.NONE:
@@ -262,17 +256,8 @@ func generate_collision_points() -> PackedVector2Array:
 
 func _on_dirty_update() -> void:
 	if _dirty:
-		update_render_nodes()
-		clear_cached_data()
-		# Close shape
 		_close_shape()
-		if has_minimum_point_count():
-			bake_collision()
-			cache_edges()
-			cache_meshes()
-		queue_redraw()
-		_dirty = false
-		emit_signal("on_dirty_update")
+	super._on_dirty_update()
 
 
 func cache_edges() -> void:
