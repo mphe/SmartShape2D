@@ -36,26 +36,6 @@ func _init() -> void:
 ############
 # OVERRIDE #
 ############
-func remove_point(key: int) -> void:
-	_points.remove_point(key)
-	_close_shape()
-	_update_curve(_points)
-	set_as_dirty()
-	emit_signal("points_modified")
-
-
-func set_point_array(a: SS2D_Point_Array, make_unique: bool = true) -> void:
-	if make_unique:
-		_points = a.duplicate(true)
-	else:
-		_points = a
-	_close_shape()
-	clear_cached_data()
-	_update_curve(_points)
-	set_as_dirty()
-	notify_property_list_changed()
-
-
 func has_minimum_point_count() -> bool:
 	return _points.get_point_count() >= 3
 
@@ -209,7 +189,7 @@ func _close_shape() -> bool:
 		key_last = _points.add_point(_points.get_point_position(key_first))
 
 	_points.set_constraint(key_first, key_last, SS2D_Point_Array.CONSTRAINT.ALL)
-	_add_point_update()
+	_on_points_modified()
 	return true
 
 
@@ -242,12 +222,13 @@ func adjust_add_point_index(index: int) -> int:
 	return index
 
 
-func _add_point_update() -> void:
-	# Return early if _close_shape() adds another point
-	# _add_point_update() will be called again by having another point added
+func _on_points_modified(update_curve: bool = true) -> void:
+	# Whenever points change, e.g. by remove_point or add_point, ensure the shape is closed.
+	# Return early if _close_shape() adds another point because _on_points_modified() will be called
+	# again inside _close_shape().
 	if _close_shape():
 		return
-	super._add_point_update()
+	super._on_points_modified(update_curve)
 
 
 func generate_collision_points() -> PackedVector2Array:

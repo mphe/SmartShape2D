@@ -183,8 +183,7 @@ func set_point_array(a: SS2D_Point_Array, make_unique: bool = true) -> void:
 		__points = a
 	__points.connect("material_override_changed", self._handle_material_override_change)
 	clear_cached_data()
-	_update_curve(__points)
-	set_as_dirty()
+	_on_points_modified()
 	notify_property_list_changed()
 
 
@@ -218,14 +217,14 @@ func _update_curve_no_control() -> void:
 		_curve_no_control_points.add_point(_curve.get_point_position(i))
 
 
+# FIXME: Only used in a unit test. Remove?
 func set_curve(value: Curve2D) -> void:
 	_curve = value
 	__points.clear()
-	for i in range(0, _curve.get_point_count(), 1):
+	for i in _curve.get_point_count():
 		__points.add_point(_curve.get_point_position(i))
 	_update_curve_no_control()
-	set_as_dirty()
-	emit_signal("points_modified")
+	_on_points_modified(false)
 	notify_property_list_changed()
 
 
@@ -359,14 +358,12 @@ func get_tessellated_points() -> PackedVector2Array:
 
 func invert_point_order() -> void:
 	__points.invert_point_order()
-	_update_curve(__points)
-	set_as_dirty()
+	_on_points_modified()
 
 
 func clear_points() -> void:
 	__points.clear()
-	_update_curve(__points)
-	set_as_dirty()
+	_on_points_modified()
 
 
 # Meant to override in subclasses
@@ -377,20 +374,20 @@ func adjust_add_point_index(index: int) -> int:
 # Meant to override in subclasses
 func add_points(verts: PackedVector2Array, starting_index: int = -1, key: int = -1) -> Array[int]:
 	var keys: Array[int] = []
-	for i in range(0, verts.size(), 1):
+	for i in verts.size():
 		var v: Vector2 = verts[i]
 		if starting_index != -1:
 			keys.push_back(__points.add_point(v, starting_index + i, key))
 		else:
 			keys.push_back(__points.add_point(v, starting_index, key))
-	_add_point_update()
+	_on_points_modified()
 	return keys
 
 
 # Meant to override in subclasses
 func add_point(pos: Vector2, index: int = -1, key: int = -1) -> int:
 	key = __points.add_point(pos, index, key)
-	_add_point_update()
+	_on_points_modified()
 	return key
 
 
@@ -398,8 +395,11 @@ func get_next_key() -> int:
 	return __points.get_next_key()
 
 
-func _add_point_update():
-	_update_curve(__points)
+## Triggers a shape update. Should be called whenever points change.
+## update_curve should be false when the modification came from modifying the curve.
+func _on_points_modified(update_curve: bool = true) -> void:
+	if update_curve:
+		_update_curve(__points)
 	set_as_dirty()
 	emit_signal("points_modified")
 
@@ -414,16 +414,12 @@ func is_index_in_range(idx: int) -> bool:
 
 func set_point_position(key: int, pos: Vector2) -> void:
 	__points.set_point_position(key, pos)
-	_update_curve(__points)
-	set_as_dirty()
-	emit_signal("points_modified")
+	_on_points_modified()
 
 
 func remove_point(key: int) -> void:
 	__points.remove_point(key)
-	_update_curve(__points)
-	set_as_dirty()
-	emit_signal("points_modified")
+	_on_points_modified()
 
 
 func remove_point_at_index(idx: int) -> void:
@@ -458,18 +454,14 @@ func get_point_index(key: int) -> int:
 ## point_in controls the edge leading from the previous vertex to this one
 func set_point_in(key: int, v: Vector2) -> void:
 	__points.set_point_in(key, v)
-	_update_curve(__points)
-	set_as_dirty()
-	emit_signal("points_modified")
+	_on_points_modified()
 
 
 
 ## point_out controls the edge leading from this vertex to the next
 func set_point_out(key: int, v: Vector2) -> void:
 	__points.set_point_out(key, v)
-	_update_curve(__points)
-	set_as_dirty()
-	emit_signal("points_modified")
+	_on_points_modified()
 
 
 func get_point_in(key: int) -> Vector2:
