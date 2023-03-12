@@ -1112,9 +1112,7 @@ static func get_meta_material_index_mapping_for_overrides(
 ## Will return a dictionary containing array of SS2D_IndexMap.[br]
 ## Each element in the array is a contiguous sequence of indicies that fit inside
 ## the meta_material's normalrange.[br]
-static func get_meta_material_index_mapping(
-	s_material: SS2D_Material_Shape, verts: PackedVector2Array
-) -> Array[SS2D_IndexMap]:
+func get_meta_material_index_mapping(s_material: SS2D_Material_Shape, verts: PackedVector2Array) -> Array[SS2D_IndexMap]:
 	return _get_meta_material_index_mapping(s_material, verts, false)
 
 

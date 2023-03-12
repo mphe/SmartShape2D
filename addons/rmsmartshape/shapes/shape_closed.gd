@@ -269,7 +269,7 @@ func cache_edges() -> void:
 
 ## Differs from the main get_meta_material_index_mapping
 ## in that the points wrap around.
-static func get_meta_material_index_mapping(s_material: SS2D_Material_Shape, verts: PackedVector2Array) -> Array[SS2D_IndexMap]:
+func get_meta_material_index_mapping(s_material: SS2D_Material_Shape, verts: PackedVector2Array) -> Array[SS2D_IndexMap]:
 	return _get_meta_material_index_mapping(s_material, verts, true)
 
 
