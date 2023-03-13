@@ -202,16 +202,6 @@ func is_shape_closed() -> bool:
 	return get_point_constraint(key1, key2) == SS2D_Point_Array.CONSTRAINT.ALL
 
 
-func add_points(verts: PackedVector2Array, starting_index: int = -1, key: int = -1) -> Array[int]:
-	for i in range(0, verts.size(), 1):
-		print("%s | %s" % [i, verts[i]])
-	return super.add_points(verts, adjust_add_point_index(starting_index), key)
-
-
-func add_point(p_position: Vector2, index: int = -1, key: int = -1) -> int:
-	return super.add_point(p_position, adjust_add_point_index(index), key)
-
-
 func adjust_add_point_index(index: int) -> int:
 	# Don't allow a point to be added after the last point of the closed shape or before the first
 	if is_shape_closed():

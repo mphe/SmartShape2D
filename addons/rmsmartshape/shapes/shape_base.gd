@@ -371,8 +371,8 @@ func adjust_add_point_index(index: int) -> int:
 	return index
 
 
-# Meant to override in subclasses
 func add_points(verts: PackedVector2Array, starting_index: int = -1, key: int = -1) -> Array[int]:
+	starting_index = adjust_add_point_index(starting_index)
 	var keys: Array[int] = []
 	for i in verts.size():
 		var v: Vector2 = verts[i]
@@ -384,8 +384,8 @@ func add_points(verts: PackedVector2Array, starting_index: int = -1, key: int = 
 	return keys
 
 
-# Meant to override in subclasses
 func add_point(pos: Vector2, index: int = -1, key: int = -1) -> int:
+	index = adjust_add_point_index(index)
 	key = __points.add_point(pos, index, key)
 	_on_points_modified()
 	return key
