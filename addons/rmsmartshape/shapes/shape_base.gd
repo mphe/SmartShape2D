@@ -712,15 +712,11 @@ func should_flip_edges() -> bool:
 
 
 func _prepare_generate_collision_points(default_quad_width: float) -> SS2D_Edge:
-	var t_points: PackedVector2Array = get_tessellated_points()
-	if t_points.size() < 2:
+	var num_points := get_point_count()
+	if num_points < 2:
 		return null
-	var indicies: Array[int] = []
 
-	var verts: PackedVector2Array = get_vertices()
-	for i in verts.size():
-		indicies.push_back(i)
-
+	var indicies: Array[int] = range(num_points)
 	var edge_data := SS2D_IndexMap.new(indicies, null)
 	var edge: SS2D_Edge = _build_edge_with_material(edge_data, collision_offset - 1.0, default_quad_width)
 	_weld_quad_array(edge.quads, false)
