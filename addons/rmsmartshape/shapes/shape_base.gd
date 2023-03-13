@@ -339,8 +339,8 @@ func _update_curve(p_array: SS2D_Point_Array) -> void:
 
 func get_vertices() -> PackedVector2Array:
 	var positions: PackedVector2Array = []
-	for p_key in __points.get_all_point_keys():
-		positions.push_back(__points.get_point_position(p_key))
+	for p_key in get_all_point_keys():
+		positions.push_back(get_point_position(p_key))
 	return positions
 
 
@@ -535,34 +535,34 @@ func set_point(key: int, value: SS2D_Point) -> void:
 
 
 func set_point_width(key: int, w: float) -> void:
-	var props: SS2D_VertexProperties = __points.get_point_properties(key)
+	var props: SS2D_VertexProperties = get_point_properties(key)
 	props.width = w
 	__points.set_point_properties(key, props)
 	set_as_dirty()
 
 
 func get_point_width(key: int) -> float:
-	return __points.get_point_properties(key).width
+	return get_point_properties(key).width
 
 
 func set_point_texture_index(key: int, tex_idx: int) -> void:
-	var props: SS2D_VertexProperties = __points.get_point_properties(key)
+	var props: SS2D_VertexProperties = get_point_properties(key)
 	props.texture_idx = tex_idx
 	__points.set_point_properties(key, props)
 
 
 func get_point_texture_index(key: int) -> int:
-	return __points.get_point_properties(key).texture_idx
+	return get_point_properties(key).texture_idx
 
 
 func set_point_texture_flip(key: int, flip: bool) -> void:
-	var props: SS2D_VertexProperties = __points.get_point_properties(key)
+	var props: SS2D_VertexProperties = get_point_properties(key)
 	props.flip = flip
 	__points.set_point_properties(key, props)
 
 
 func get_point_texture_flip(key: int) -> bool:
-	return __points.get_point_properties(key).flip
+	return get_point_properties(key).flip
 
 
 func get_point_properties(key: int) -> SS2D_VertexProperties:
@@ -957,8 +957,8 @@ static func build_quad_corner(
 func _get_width_for_tessellated_point(points: PackedVector2Array, t_points: PackedVector2Array, t_idx) -> float:
 	var v_idx: int = get_vertex_idx_from_tessellated_point(points, t_points, t_idx)
 	var v_idx_next: int = _get_next_point_index(v_idx, points)
-	var w1: float = __points.get_point_properties(__points.get_point_key_at_index(v_idx)).width
-	var w2: float = __points.get_point_properties(__points.get_point_key_at_index(v_idx_next)).width
+	var w1: float = get_point_properties(get_point_key_at_index(v_idx)).width
+	var w2: float = get_point_properties(get_point_key_at_index(v_idx_next)).width
 	var ratio: float = get_ratio_from_tessellated_point_to_vertex(points, t_points, t_idx)
 	return lerp(w1, w2, ratio)
 
@@ -1492,8 +1492,8 @@ func _build_edge_with_material(
 	var last_idx: int = index_map.indicies[-1]
 	var first_idx_t: int = get_tessellated_idx_from_point(verts, verts_t, first_idx)
 	var last_idx_t: int = get_tessellated_idx_from_point(verts, verts_t, last_idx)
-	edge.first_point_key = __points.get_point_key_at_index(first_idx)
-	edge.last_point_key = __points.get_point_key_at_index(last_idx)
+	edge.first_point_key = get_point_key_at_index(first_idx)
+	edge.last_point_key = get_point_key_at_index(last_idx)
 
 	# How many tessellated points are contained within this index map?
 	var tess_point_count: int = _edge_data_get_tess_point_count(index_map)

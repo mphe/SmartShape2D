@@ -37,7 +37,7 @@ func _init() -> void:
 # OVERRIDE #
 ############
 func has_minimum_point_count() -> bool:
-	return _points.get_point_count() >= 3
+	return get_point_count() >= 3
 
 
 func _build_meshes(edges: Array[SS2D_Edge]) -> Array[SS2D_Mesh]:
@@ -172,33 +172,33 @@ func _build_fill_mesh(points: PackedVector2Array, s_mat: SS2D_Material_Shape) ->
 	return meshes
 
 
-# Will mutate the _points to ensure this is a closed_shape.
+# Will mutate the __points to ensure this is a closed_shape.
 # last point will be constrained to first point
-# returns true if _points is modified
+# returns true if __points is modified
 func _close_shape() -> bool:
 	if is_shape_closed():
 		return false
 	if not has_minimum_point_count():
 		return false
 
-	var key_first: int = _points.get_point_key_at_index(0)
-	var key_last: int = _points.get_point_key_at_index(get_point_count() - 1)
+	var key_first: int = get_point_key_at_index(0)
+	var key_last: int = get_point_key_at_index(get_point_count() - 1)
 
 	# If points are not the same pos, add new point
 	if get_point_position(key_first) != get_point_position(key_last):
-		key_last = _points.add_point(_points.get_point_position(key_first))
+		key_last = __points.add_point(get_point_position(key_first))
 
-	_points.set_constraint(key_first, key_last, SS2D_Point_Array.CONSTRAINT.ALL)
+	__points.set_constraint(key_first, key_last, SS2D_Point_Array.CONSTRAINT.ALL)
 	_on_points_modified()
 	return true
 
 
 func is_shape_closed() -> bool:
-	var point_count: int = _points.get_point_count()
+	var point_count: int = get_point_count()
 	if not has_minimum_point_count():
 		return false
-	var key1: int = _points.get_point_key_at_index(0)
-	var key2: int = _points.get_point_key_at_index(point_count - 1)
+	var key1: int = get_point_key_at_index(0)
+	var key2: int = get_point_key_at_index(point_count - 1)
 	return get_point_constraint(key1, key2) == SS2D_Point_Array.CONSTRAINT.ALL
 
 
