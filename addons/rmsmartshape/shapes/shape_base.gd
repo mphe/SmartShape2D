@@ -340,7 +340,7 @@ func _update_curve(p_array: SS2D_Point_Array) -> void:
 func get_vertices() -> PackedVector2Array:
 	var positions: PackedVector2Array = []
 	for p_key in get_all_point_keys():
-		positions.push_back(get_point_position(p_key))
+		positions.push_back(__points.get_point_position(key))
 	return positions
 
 
