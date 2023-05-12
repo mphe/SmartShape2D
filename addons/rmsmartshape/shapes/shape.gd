@@ -3,7 +3,6 @@
 extends Node2D
 class_name SS2D_Shape
 
-
 ## Represents the base functionality for all smart shapes.
 
 # Functions consist of the following categories:[br]
@@ -28,6 +27,7 @@ var _curve: Curve2D
 # Used for calculating straight edges
 var _curve_no_control_points: Curve2D = Curve2D.new()
 var _collision_polygon_node: CollisionPolygon2D
+var _vertex_cache := PackedVector2Array()
 # Whether or not the plugin should allow editing this shape
 var can_edit: bool = true
 
@@ -313,10 +313,7 @@ func _update_curve(p_array: SS2D_Point_Array) -> void:
 
 
 func get_vertices() -> PackedVector2Array:
-	var positions: PackedVector2Array = []
-	for p_key in _points.get_all_point_keys():
-		positions.push_back(_points.get_point_position(p_key))
-	return positions
+	return _vertex_cache
 
 
 func get_tessellated_points() -> PackedVector2Array:
@@ -847,6 +844,14 @@ func bake_collision() -> void:
 	_collision_polygon_node.polygon = xform * generate_collision_points()
 
 
+func _cache_vertices() -> void:
+	var keys := _points.get_all_point_keys()
+	_vertex_cache.resize(keys.size())
+
+	for i in keys.size():
+		_vertex_cache[i] = _points.get_point_position(keys[i])
+
+
 func cache_edges() -> void:
 	if shape_material != null and render_edges:
 		_edges = _build_edges(shape_material, get_vertices())
@@ -947,8 +952,8 @@ func _build_fill_mesh(points: PackedVector2Array, s_mat: SS2D_Material_Shape) ->
 
 
 func _get_uv_points(
-	points: PackedVector2Array, 
-	s_material: SS2D_Material_Shape, 
+	points: PackedVector2Array,
+	s_material: SS2D_Material_Shape,
 	tex_size: Vector2
 ) -> PackedVector2Array:
 	var transformation: Transform2D = global_transform
@@ -962,7 +967,7 @@ func _get_uv_points(
 	transformation = transformation.scaled(Vector2(tex_scale, tex_scale))
 
 	# If relative rotation ... undo rotation from global_transform
-	if not s_material.fill_texture_absolute_rotation: 
+	if not s_material.fill_texture_absolute_rotation:
 		transformation = transformation.rotated(-global_rotation)
 
 	# Rotate the desired extra amount
@@ -970,10 +975,10 @@ func _get_uv_points(
 
 	# Shift the desired amount (adjusted so it's scale independent)
 	transformation = transformation.translated(-s_material.fill_texture_offset / s_material.fill_texture_scale)
-	
+
 	# Convert local space to UV
 	transformation = transformation.scaled(Vector2(1 / tex_size.x, 1 / tex_size.y))
-	
+
 	return transformation * points
 
 
@@ -1384,6 +1389,7 @@ func clear_cached_data() -> void:
 
 func _on_dirty_update() -> void:
 	if _dirty:
+		_cache_vertices()
 		update_render_nodes()
 		clear_cached_data()
 		bake_collision()
