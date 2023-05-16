@@ -18,6 +18,7 @@ var _points_in: PackedVector2Array
 var _points_out: PackedVector2Array
 var _properties: Array[SS2D_VertexProperties]
 var _constraints: Dictionary
+var _was_closed: bool
 
 
 func _init(shape: SS2D_Shape_Base, key: int) -> void:
@@ -37,6 +38,7 @@ func get_name() -> String:
 
 func do() -> void:
 	_shape.begin_update()
+	_was_closed = _shape.is_shape_closed()
 	var first_run := _positions.size() == 0
 	for k in _keys:
 		if first_run:
@@ -46,7 +48,8 @@ func do() -> void:
 			_points_out.append(_shape.get_point_out(k))
 			_properties.append(_shape.get_point_properties(k))
 		_shape.remove_point(k)
-	_close_shape.do()
+	if _was_closed:
+		_close_shape.do()
 	_invert_orientation.do()
 	_shape.end_update()
 
@@ -54,7 +57,8 @@ func do() -> void:
 func undo() -> void:
 	_shape.begin_update()
 	_invert_orientation.undo()
-	_close_shape.undo()
+	if _was_closed:
+		_close_shape.undo()
 	for i in range(_keys.size()-1, -1, -1):
 		_shape.add_point(_positions[i], _indicies[i], _keys[i])
 		_shape.set_point_in(_keys[i], _points_in[i])
