@@ -5,13 +5,13 @@ extends SS2D_Action
 const ActionInvertOrientation := preload("res://addons/rmsmartshape/actions/action_invert_orientation.gd")
 var _invert_orientation: ActionInvertOrientation
 
-var _shape: SS2D_Shape_Base
+var _shape: SS2D_Shape
 var _key: int
 var _position: Vector2
 var _idx: int
 
 
-func _init(shape: SS2D_Shape_Base, position: Vector2, idx: int = -1) -> void:
+func _init(shape: SS2D_Shape, position: Vector2, idx: int = -1) -> void:
 	_shape = shape
 	_position = position
 	_idx = _shape.adjust_add_point_index(idx)

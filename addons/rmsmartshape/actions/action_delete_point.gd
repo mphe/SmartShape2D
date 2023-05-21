@@ -10,7 +10,7 @@ var _invert_orientation: ActionInvertOrientation
 const ActionCloseShape := preload("res://addons/rmsmartshape/actions/action_close_shape.gd")
 var _close_shape: ActionCloseShape
 
-var _shape: SS2D_Shape_Base
+var _shape: SS2D_Shape
 var _keys: PackedInt64Array
 var _indicies: PackedInt64Array
 var _positions: PackedVector2Array
@@ -21,7 +21,7 @@ var _constraints: Dictionary
 var _was_closed: bool
 
 
-func _init(shape: SS2D_Shape_Base, key: int) -> void:
+func _init(shape: SS2D_Shape, key: int) -> void:
 	_shape = shape
 	_invert_orientation = ActionInvertOrientation.new(shape)
 	_close_shape = ActionCloseShape.new(shape)
@@ -70,7 +70,7 @@ func undo() -> void:
 	_shape.end_update()
 
 
-func get_constrained_points_to_delete(s: SS2D_Shape_Base, k: int, keys: PackedInt64Array = []) -> PackedInt64Array:
+func get_constrained_points_to_delete(s: SS2D_Shape, k: int, keys: PackedInt64Array = []) -> PackedInt64Array:
 	keys.push_back(k)
 	var constraints: Dictionary = s.get_point_constraints(k)
 	for tuple in constraints:
