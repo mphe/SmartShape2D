@@ -31,3 +31,15 @@ static func merge_arrays(arrays: Array) -> Array:
 		for v: Variant in array:
 			new_array.push_back(v)
 	return new_array
+
+
+## Helper for displaying a one-shot AcceptDialog
+static func show_dialog(title: String, text: String, tree: Node) -> AcceptDialog:
+	var dialog := AcceptDialog.new()
+	tree.add_child(dialog)
+	dialog.title = "SmartShape2D - %s" % title
+	dialog.dialog_text = text
+	dialog.confirmed.connect(dialog.queue_free)
+	dialog.canceled.connect(dialog.queue_free)
+	dialog.popup_centered()
+	return dialog
